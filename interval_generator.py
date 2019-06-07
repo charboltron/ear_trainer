@@ -1,3 +1,4 @@
+# 'interval_generator.py'
 from   playsound import playsound as ps
 import os
 import shutil
@@ -10,7 +11,7 @@ import time
 import file_handler
 import toolkit as tk 
 
-current_dir =   '/Users/charlesbolton/Desktop/510_Music/sound_project/'
+current_dir =   '/Users/charlesbolton/Desktop/510_Music/sound_project/ear_trainer/'
 interval_path = current_dir+'sine_waves/intervals/test/'
 
 intervals = ['min_second', 'maj_second', 'min_third', 'maj_third', 'perf_fourth', 'tritone',
@@ -19,7 +20,7 @@ intervals = ['min_second', 'maj_second', 'min_third', 'maj_third', 'perf_fourth'
 ref = 440.0
 interval_names = []
 
-def generate_intervals(waves, index, t_last, interval_range):
+def generate_intervals(waves, index, t_last, interval_range, wave_type):
      
     print(f'Last tonic: {t_last}') 
     print(f'Index: {index}')
@@ -50,7 +51,7 @@ def generate_intervals(waves, index, t_last, interval_range):
             #print('NC: {}'.format(norm_const))
             for sample in range(0, tk.num_samples):
                 tonic_plus_interval[sample] = tonic_plus_interval[sample]/norm_const
-                interval_freq[tonic+intervals[i]] = tonic_plus_interval
+            interval_freq[tonic+intervals[i]] = tonic_plus_interval
                 
             interval_names.append(tonic+intervals[i])
            
@@ -70,6 +71,6 @@ def generate_intervals(waves, index, t_last, interval_range):
         t_count +=1
         if t_count == interval_range-12:
             print(f't count: {t_count}')
-            interval_dict = file_handler.create_file_names('_sine_', interval_names)
+            interval_dict = file_handler.create_file_names(wave_type, interval_names)
             file_handler.write_wav_files(current_dir, interval_path, interval_dict, interval_freq) 
             return

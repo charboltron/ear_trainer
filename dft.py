@@ -1,8 +1,9 @@
+#'dft.py'
 import numpy as np
 import toolkit as tk
 
 #'samples' is a list of 44100 sample values 
-def dft(num_samples, samples, pitch_freq, test): 
+def dft(num_samples, samples, pitch_freq, test, return_type): 
     bins = {}
     return_pitches = []
     summation = 0.+ 1j*0.
@@ -27,10 +28,13 @@ def dft(num_samples, samples, pitch_freq, test):
                         print('This corresponds to pitch: {}.'.format(pitch))
                     return_pitches.append(pitch)
         bins[k]=(magnitude)
-    interv = compute_interval(return_pitches, pitch_freq)    
-    #print(bins)
-    return return_pitches, interv
-
+    if return_type == 'interval':
+        interv = compute_interval(return_pitches, pitch_freq)    
+        #print(bins)
+        return return_pitches, interv
+    elif return_type == 'chord':
+        chord = compute_chord(return_pitches, pitch_freq)
+        return return_pitches, chord
 
 def compute_interval(return_pitches, pitch_freq):
    tonic = None
@@ -47,6 +51,47 @@ def compute_interval(return_pitches, pitch_freq):
    #print(high, low, high-low)
    interv = high-low
    return interv
+
+def compute_chord(return_pitches, pitch_freq):
+   
+   first = True
+   chord_pitches = []
+   chord_intervals = []
+   for i, key in enumerate(pitch_freq.keys()):
+      if key in return_pitches:
+          if first:
+              chord_intervals.append(0)
+              first = False
+              last = i
+          else:
+              chord_intervals.append(i-last)
+   #print(f'ci - {chord_intervals}')
+   return chord_intervals           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 '''      

@@ -15,16 +15,16 @@ compname="not compressed"
 nchannels=1
 sampwidth=2                                              #2 bytes so 16-bit.
 
-def create_file_names(string, all_pitches):
+def create_file_names(wave_type, all_pitches):
     file_names = []
     i = 1
     for pitch in all_pitches:
         if i < 10:
-            file_name = '00'+str(i)+string+pitch+'.wav'
+            file_name = '00'+str(i)+wave_type+pitch+'.wav'
         elif i < 100:
-            file_name = '0'+str(i)+string+pitch+'.wav'
+            file_name = '0'+str(i)+wave_type+pitch+'.wav'
         else:
-            file_name = str(i)+string+pitch+'.wav'
+            file_name = str(i)+wave_type+pitch+'.wav'
         file_names.append(file_name)
         i+=1
 

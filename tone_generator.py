@@ -1,6 +1,5 @@
 #'tone generator'
 #Copyright Charles Bolton, 2019
-
 import os
 import shutil
 import numpy as np
@@ -11,6 +10,7 @@ from playsound import playsound as ps
 import time
 import file_handler
 from interval_generator import generate_intervals
+from chord_generator import generate_chords
 import dft
 import toolkit as tk
 
@@ -20,10 +20,11 @@ on a piano. It does this by starting with a reference 440Hz and generating all t
 sine tones based off of the mathematics of equal temperament.
 """
 
-current_dir = '/Users/charlesbolton/Desktop/510_Music/sound_project/'
+current_dir = '/Users/charlesbolton/Desktop/510_Music/sound_project/ear_trainer/'
 
 def generate_tones():
-    
+   
+    #To be implemented: take wavetype as argument
     #Reference frequency begins at 440Hz. Other frequencies based on this tone
     reference_frequency = 440.0
     pitch_freq = {} 
@@ -65,7 +66,7 @@ def save_sine_tones():
     '''
     all_pitches = tk.get_pitches()
     all_waves = tk.get_all_waves_sin()
-    sine_path = current_dir+'sine_waves/all_tones_test/'
+    sine_path = current_dir+'sine_waves/all_tones/test/' #send to test dir first
     sine_dict = file_handler.create_file_names('_sine_', all_pitches)
     file_handler.write_wav_files(current_dir, sine_path, sine_dict, all_waves)
     file_handler.move_files(current_dir, sine_path)
@@ -78,9 +79,14 @@ def generate_interval_tones(low,high):
     the proper directory using interval_generator and file_handler
     '''
 
+    #to be implemented...
+    #wave_type = input('What kind of wave? Sine (1), Square (2), Triangle (3), Saw (4)')
+    #wave_types = ['_sine_', '_square_', '_triangle_', '_saw_']
+    wave_type = '_sine_'
+
     if (high-low < 13) or (high > 74) or (low < 0):
         print("Range Error: You must enter a range of at least 12 to create intervals")
-        print("Also, you must only enter numbers in the range of 0-87")
+        print("Also, you must only enter numbers in the range of 0-74")
         exit(0)
     all_waves, all_waves_pitches = tk.get_all_waves_pitches()
     interval_subset = {}
@@ -100,6 +106,33 @@ def generate_interval_tones(low,high):
     #print(len(interval_index))
     #print(interval_subset['C_4'])
    
-    generate_intervals(interval_subset, interval_index, high, high-low)
+    generate_intervals(interval_subset, interval_index, high, high-low, wave_type)
 #-------------------------------------------------------------------------------------
 
+def generate_chord_tones(low,high):
+    
+    #to be implemented...
+    #wave_type = input('What kind of wave? Sine (1), Square (2), Triangle (3), Saw (4)')
+    #wave_types = ['_sine_', '_square_', '_triangle_', '_saw_']
+    wave_type = '_sine_'
+    '''
+    generates the chords and stores them in
+    the proper directory using chord_generator and file_handler
+    '''
+   
+    if (high-low < 22) or (high > 74) or (low < 0):
+        print("Range Error: You must enter a range of at least 23 to create chords")
+        print("Also, you must only enter numbers in the range of 0-74")
+        exit(0)
+    all_waves, all_waves_pitches = tk.get_all_waves_pitches()
+    chord_subset = {}
+    chord_index = []
+    
+    for i in range(low,high):
+        p = all_waves_pitches[i]
+        chord_subset[p] = all_waves[p]
+        chord_index.append(p)
+    
+    generate_chords(chord_subset, chord_index, high, high-low, wave_type)
+
+#---------------------------------------------------------------------------------------

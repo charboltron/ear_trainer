@@ -11,6 +11,8 @@ from interval_generator import generate_intervals
 import dft
 import toolkit as tk
 
+
+current_dir = '/Users/charlesbolton/Desktop/510_Music/sound_project/ear_trainer'
 '''
 unit test to check if dft works for all piano frequencies.
 '''

@@ -1,3 +1,4 @@
+#'pitch_trainer.py'
 def run():
     
     import time
@@ -7,9 +8,9 @@ def run():
     import random
     import menus
     import toolkit as tk
+    import chimes
 
-
-    sines, sine_tones = tk.get_playback_set_pitches() 
+    wave_tones = tk.get_playback_set_pitches() 
     pitch_values = ['A_', 'As_Bb', 'B_', 'C_', 'Cs_Bb', 'D_', 'Ds_Eb', 'E_', 
                     'F_', 'Fs_Gb','G_', 'Gs_Ab' ]
     pitch_keys = ['a','s','b','c','v','d','r','e','f','t','g','x']
@@ -24,18 +25,22 @@ def run():
    #print(pitches)
     streak = 0
     first = True
+    best = 0
 
     while True:  
 
         if first or sel.lower() != 'n':
-            sel = input('Play tone (p) Quit (q):')
+            sel = input('Play tone (p)  Return to main menu (m!)   Quit (q):')
             sel = sel.lower()
+        if sel.lower() == 'm!':
+            return 'm!'
         if sel.lower() == 'q':
+            chimes.correct()
             print("You entered 'q'. Quitting program. Thanks for playing!\n\n")
             exit(0)
-        if sel.lower() == 'p' or 'n':
+        if sel.lower() == 'p' or sel.lower() == 'n':
             first = False
-            rand_pitch = random.choice(sine_tones)
+            rand_pitch = random.choice(wave_tones)
             
             print("LISTEN CLOSELY...IMAGINE THE PITCH...")
             #print(f'random pitch: {rand_pitch!r}')
@@ -48,20 +53,22 @@ def run():
         print()
         menus.print_perfect_pitch_header()
 
-        best = 0
         guessed = False
         while True:
             if sel.lower() == 'u':
                 menus.print_perfect_pitch_header()
-            sel = input('\nEnter a command or guess (\'?\' for commands):')
-            if sel.lower() == 'q':
+            sel = input('\nEnter a command or guess. Type (?) for choices:')
+            if sel.lower() == 'q': 
                 print("You entered 'q'. Quitting program. Thanks for playing!\n\n")
                 print(f'Your best streak: {best}') 
                 exit(0)
             elif sel.lower() == 'p':
                 ps(rand_pitch)
                 continue
+            elif sel.lower() == 'm!':
+                break
             elif sel.lower() == 'u':
+                guessed = True
                 print('\nThe correct pitch was:')
                 print(print_pks[pitch])
                 print()
@@ -72,11 +79,13 @@ def run():
             elif sel == '?':
                 menus.print_perfect_pitch_choices()
                 menus.print_perfect_pitch_header()
-            if sel.lower() in pks.keys():
+            elif sel.lower() in pks.keys():
                 print('\nYou guessed:')
+                sel = sel.lower()
                 print(print_pks[pks[sel]])
                 if pks[sel.lower()] == pitch:
-                    print("Correct! \n\n(Type 'n', 'a', 'i', or \'?\')\n")
+                    chimes.correct()
+                    print("Correct! \n\nnext (n) play again (p) or (?)\n")
                     if guessed == False: 
                        streak += 1
                        if streak > best:
@@ -85,8 +94,10 @@ def run():
                 else:
                    guessed = True
                    streak = 0
+                   chimes.incorrect()
                    print("That's not correct. Try again.")
             else:
                 print('invalid input!')
                 continue
         print(f'Streak: {streak}')
+   
