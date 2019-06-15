@@ -1,6 +1,5 @@
 # ear_trainer
-![GitHub Logo](/img/title.jpg)
-Format: ![Alt Text](url)
+![Title Picture](/img/title.jpg)
 Ear Trainer
 
 Using the generator modules should not be necessary for playing the game. They are provided to anyone interested in how the .wav files were generated. To play the game, just run $python main.py from the command line and enjoy (or not).
