@@ -6,7 +6,7 @@ Created by Charles Bolton in May/June 2019, this project is a music and digital 
 
 For the ear trainer, I generated over 5,000 .wav files using four basic waveforms (sine, square, triangle, and saw). The different sound files are generated using the tone_generator and toolkit modules which generate basic pitch tones, interval tones, and chord tones. The interval and chord generators are their own respective modules and thus don't need to be accessed, either, except for the interested. Because the files are already saved in their respective waveform directories, it is unnecessary for the user to access or use these modules. Should you really want to use the generators, run 
 
-$python, import tone_generator as tg
+python import tone_generator as tg
 
 and then run either 
 
