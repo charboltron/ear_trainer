@@ -27,7 +27,7 @@ Using the generator modules should not be necessary for playing the game. They a
 $python main.py from the command line and enjoy (or not).
 
 
-###Python Modules 
+### Python Modules 
 
 * playsound
 * numpy 
