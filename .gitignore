@@ -1,4 +1,5 @@
 #VIM
+current_dir.txt
 # Swap
 [._]*.s[a-v][a-z]
 [._]*.sw[a-p]
