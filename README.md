@@ -1,4 +1,4 @@
-#Ear Trainer
+# Ear Trainer
 ![Title Picture](/img/title.jpg)
 
 ### About
