@@ -22,9 +22,11 @@ Each game has its own trainer module which is essentially a CLI menu-based game.
 
 ### Running
 
-Using the generator modules should not be necessary for playing the game. They are provided to anyone interested in how the .wav files were generated. To play the game, just run 
+Using the generator modules should not be necessary for playing the game. They are provided to anyone interested in how the .wav files were generated. To play the game, just go to the src folder and run:
 
-$python main.py from the command line and enjoy (or not).
+python main.py 
+
+from the command line and enjoy (or not).
 
 
 ### Python Modules 
