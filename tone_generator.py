@@ -20,56 +20,50 @@ on a piano. It does this by starting with a reference 440Hz and generating all t
 sine tones based off of the mathematics of equal temperament.
 """
 
-current_dir = '/Users/charlesbolton/Desktop/510_Music/sound_project/ear_trainer/'
+current_dir = tk.current_dir
 
 def generate_tones():
-   
-    #To be implemented: take wavetype as argument
-    #Reference frequency begins at 440Hz. Other frequencies based on this tone
-    reference_frequency = 440.0
-    pitch_freq = {} 
-    pitches = ['A', 'As_Bb', 'B', 'C', 'Cs_Db', 'D', 'Ds_Eb', 'E', 'F', 'Fs_Gb', 'G', 'Gs_Ab']
-    octave_count = 0
-    tone_count = 0
-    all_waves = {}
-    all_pitches = []
-
-    #compute all the semitones in all piano octaves from A0 to C8 (88 keys)
-    for semitone in range(-48, 40): 
-        #compute base value for frequency of each semitone from 440Hz reference 
-        frequency = reference_frequency * (2 ** (semitone/12))
-        #append semitone base frequency to dictionary of pitch/frequency pairs 
-        pitch = pitches[semitone % 12]+'_'+str(octave_count) #append octave number
-        all_pitches.append(pitch)
-        pitch_freq[pitch] = frequency
-        #Create a 1-second sine wave of 44.1kHz samples for each frequency
-        sine_wave = [np.sin(2 * np.pi * frequency * x/(tk.sampling_rate)) for x in range(tk.num_samples)]
-        all_waves[pitch] = sine_wave
-        tone_count += 1
-        #increment octave number
-        if (tone_count -3) % 12 == 0:
-            octave_count += 1
-    #print(all_waves.keys())
-
-    #for j, k in pitch_freq.items():
-    #    print(j,k)
-
-    all_waves_pitches = {}
-    for i, pitch in enumerate(all_waves.keys()):
-        all_waves_pitches[i] = pitch
-    #print(all_waves_pitches)
-
-def save_sine_tones():
     
     '''
-    create sine tone files and write to a folder
+    Test function to see if samples are being created correctly 
+    save_tones is used for generatoion and saving files
     '''
+    wave_type, wave_dir = tk.choose_wave_type()
+    max = 0.0
+    if wave_type == '_sine_':
+        all_waves = tk.get_all_waves_sine()  
+    elif wave_type == '_square_':
+        all_waves = tk. get_all_waves_square()
+    elif wave_type == '_saw_':
+        all_waves = tk. get_all_waves_saw()
+    elif wave_type == '_triangle_':
+        all_waves = tk. get_all_waves_triangle()
+    #print(all_waves['A_4'])
+    for w in all_waves['A_4']:
+        if w > max:
+             max = w
+    print(all_waves.keys())
+    print(f'max = {max}')
+
+def save_tones():
+    
+    '''
+    save tone files and write to a folder
+    '''
+    wave_type, type_dir = tk.choose_wave_type()
     all_pitches = tk.get_pitches()
-    all_waves = tk.get_all_waves_sin()
-    sine_path = current_dir+'sine_waves/all_tones/test/' #send to test dir first
-    sine_dict = file_handler.create_file_names('_sine_', all_pitches)
-    file_handler.write_wav_files(current_dir, sine_path, sine_dict, all_waves)
-    file_handler.move_files(current_dir, sine_path)
+    if wave_type == '_sine_':
+        all_waves = tk.get_all_waves_sine()
+    elif wave_type == '_square_':
+        all_waves = tk.get_all_waves_square()
+    elif wave_type == '_saw_':
+        all_waves = tk.get_all_waves_saw()
+    elif wave_type == '_triangle_': 
+        all_waves = tk.get_all_waves_triangle()
+    tone_path = type_dir+'all_tones/test/' #send to test dir first
+    tone_dict = file_handler.create_file_names(wave_type, all_pitches)
+    file_handler.write_wav_files(current_dir, tone_path, tone_dict, all_waves)
+    #file_handler.move_files(current_dir, tone_path)
 #----------------------------------------------------------------------------------------
 
 def generate_interval_tones(low,high):
@@ -79,16 +73,14 @@ def generate_interval_tones(low,high):
     the proper directory using interval_generator and file_handler
     '''
 
-    #to be implemented...
-    #wave_type = input('What kind of wave? Sine (1), Square (2), Triangle (3), Saw (4)')
-    #wave_types = ['_sine_', '_square_', '_triangle_', '_saw_']
-    wave_type = '_sine_'
+    wave_type, type_dir = tk.choose_wave_type()
 
+    print(type_dir)
     if (high-low < 13) or (high > 74) or (low < 0):
         print("Range Error: You must enter a range of at least 12 to create intervals")
         print("Also, you must only enter numbers in the range of 0-74")
         exit(0)
-    all_waves, all_waves_pitches = tk.get_all_waves_pitches()
+    all_waves, all_waves_pitches = tk.get_all_waves_pitches(wave_type)
     interval_subset = {}
     interval_index = []
     
@@ -106,33 +98,30 @@ def generate_interval_tones(low,high):
     #print(len(interval_index))
     #print(interval_subset['C_4'])
    
-    generate_intervals(interval_subset, interval_index, high, high-low, wave_type)
+    generate_intervals(interval_subset, interval_index, high, high-low, wave_type, type_dir)
 #-------------------------------------------------------------------------------------
 
 def generate_chord_tones(low,high):
     
-    #to be implemented...
-    #wave_type = input('What kind of wave? Sine (1), Square (2), Triangle (3), Saw (4)')
-    #wave_types = ['_sine_', '_square_', '_triangle_', '_saw_']
-    wave_type = '_sine_'
     '''
     generates the chords and stores them in
     the proper directory using chord_generator and file_handler
     '''
    
-    if (high-low < 22) or (high > 74) or (low < 0):
+    wave_type, type_dir  = tk.choose_wave_type()
+    if (high-low < 22) or (high > 65 ) or (low < 0):
         print("Range Error: You must enter a range of at least 23 to create chords")
         print("Also, you must only enter numbers in the range of 0-74")
         exit(0)
-    all_waves, all_waves_pitches = tk.get_all_waves_pitches()
+    all_waves, all_waves_pitches = tk.get_all_waves_pitches(wave_type)
     chord_subset = {}
     chord_index = []
     
-    for i in range(low,high):
+    for i in range(low,high+23):
         p = all_waves_pitches[i]
         chord_subset[p] = all_waves[p]
         chord_index.append(p)
     
-    generate_chords(chord_subset, chord_index, high, high-low, wave_type)
+    generate_chords(chord_subset, chord_index, high, high-low, wave_type, type_dir)
 
 #---------------------------------------------------------------------------------------

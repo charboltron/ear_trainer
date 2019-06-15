@@ -1,6 +1,10 @@
 #'scale_trainer.py' 
 def run():
     
+    '''
+    Runs the menu-based game format for the scale 
+    trainer
+    '''
     import scalekit as sk
     import time
     import wave
@@ -159,6 +163,7 @@ def run():
             elif sel == '?':
                 menus.print_scale_choices()
                 menus.print_scale_header()
+                break
             x = 0
             num = False
             for i in sel:

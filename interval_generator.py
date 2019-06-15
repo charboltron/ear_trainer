@@ -11,8 +11,7 @@ import time
 import file_handler
 import toolkit as tk 
 
-current_dir =   '/Users/charlesbolton/Desktop/510_Music/sound_project/ear_trainer/'
-interval_path = current_dir+'sine_waves/intervals/test/'
+current_dir = tk.current_dir
 
 intervals = ['min_second', 'maj_second', 'min_third', 'maj_third', 'perf_fourth', 'tritone',
              'perf_fifth', 'min_sixth', 'maj_sixth', 'min_seventh', 'maj_seventh', 'octave']
@@ -20,8 +19,16 @@ intervals = ['min_second', 'maj_second', 'min_third', 'maj_third', 'perf_fourth'
 ref = 440.0
 interval_names = []
 
-def generate_intervals(waves, index, t_last, interval_range, wave_type):
-     
+def generate_intervals(waves, index, t_last, interval_range, wave_type, type_dir):
+    
+    '''
+    Generates interval files. Called from tone_generator, it takes 
+    a dictionary waves, an range of intervals, a value indicating the last 
+    tonic considered, an index of the intervals considered, and a wave type
+    '''
+
+    interval_path = type_dir+'intervals/test/'
+    print(interval_path)
     print(f'Last tonic: {t_last}') 
     print(f'Index: {index}')
     print(f'Index length: {len(index)}')

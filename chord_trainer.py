@@ -1,6 +1,10 @@
 #'chord_trainer.py'
 def run():
 
+    '''
+    Runs the menu-based game format for the chord 
+    trainer
+    '''
     import chordkit as ck
     import time
     import wave
@@ -197,9 +201,8 @@ def run():
                 print(answer_key[guess])
                 if sus and len(correct_sus) > 1:
                     correct = False
-                    for ans in correct_sus:
-                        if (answer_key[guess] == answer_string):
-                           correct = True
+                    if answer_key[guess] in correct_sus:
+                        correct = True
                     if correct:       
                         chimes.correct()
                         print("Correct! \n\nnext (n) play (p) individual notes(i)\n")

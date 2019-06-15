@@ -1,3 +1,6 @@
+#Kit for scale dictionary generation
+
+
 heptatonic_names = ['Major', 'Natural Minor', 'Harmonic Minor', 'Melodic Minor', 'Dorian', 'Lydian', 'Phrygian', 
                     'Mixolydian', 'Locrian']
 

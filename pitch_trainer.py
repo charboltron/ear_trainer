@@ -1,6 +1,10 @@
 #'pitch_trainer.py'
 def run():
     
+    '''
+    Runs the menu-based game format for the perfect pitch 
+    trainer
+    '''
     import time
     import wave
     import os

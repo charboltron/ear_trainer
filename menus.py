@@ -1,7 +1,11 @@
 
+'''
+All the menus for each of the sub-games in the tone trainer
+'''
+
 def title():
 
-   print("\n© Copyright Charles Bolton, 2019\n") 
+   print("\nCopyright ©  Charles Bolton, 2019\n") 
    print("+---------------------------------------+")
    print("|                                       |")
    print("|  WELCOME  TO  THE   TONE  TRAINER!    |")

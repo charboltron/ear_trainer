@@ -1,6 +1,10 @@
-#'interval_generator.py'
+#'interval_trainer.py'
 def run():
 
+    '''
+    Runs the menu-based game format for the interval 
+    trainer
+    '''
     import time
     import wave
     import os

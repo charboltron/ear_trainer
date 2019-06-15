@@ -4,6 +4,14 @@ import toolkit as tk
 
 #'samples' is a list of 44100 sample values 
 def dft(num_samples, samples, pitch_freq, test, return_type): 
+    
+    '''
+    Discrete Fourier Transform with 88 bins for each pitch/frequency
+    on a 88 key piano. Can take an argument 'test' which will 
+    print out detected frequencies for debugging. For use with 
+    interval_trainer and chord_trainer, returns different values for each
+    '''
+
     bins = {}
     return_pitches = []
     summation = 0.+ 1j*0.
@@ -19,7 +27,7 @@ def dft(num_samples, samples, pitch_freq, test, return_type):
         summation = summation/num_samples
         magnitude = abs(summation)
         #print(magnitude)
-        if magnitude > .1: 
+        if magnitude > .07: 
             if test:
                 print('Frequency detected in the sine wave: {}'.format(k))
             for pitch, freq in pitch_freq.items():
@@ -37,6 +45,11 @@ def dft(num_samples, samples, pitch_freq, test, return_type):
         return return_pitches, chord
 
 def compute_interval(return_pitches, pitch_freq):
+   
+   '''
+   Returns interval distance (int) to dft
+   '''
+
    tonic = None
    interval = None
    for i, key in enumerate(pitch_freq.keys()):
@@ -54,6 +67,9 @@ def compute_interval(return_pitches, pitch_freq):
 
 def compute_chord(return_pitches, pitch_freq):
    
+   '''
+   Returns list of interval distances in chord to dft
+   '''
    first = True
    chord_pitches = []
    chord_intervals = []

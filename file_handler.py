@@ -3,19 +3,13 @@ import wave as wave
 import os
 import shutil
 import struct
-
-
-#Define parameters to make .wav files
-num_samples = 44100
-nframes = num_samples                                    #nframes is just the number of samples
-sampling_rate = 44100.0 
-amplitude = 16000                                        #fixed amplitude
-comptype="NONE"                                          #compression type
-compname="not compressed" 
-nchannels=1
-sampwidth=2                                              #2 bytes so 16-bit.
+import toolkit as tk
 
 def create_file_names(wave_type, all_pitches):
+
+    '''
+    Creates file names by appending serial numbers to files and 
+    '''
     file_names = []
     i = 1
     for pitch in all_pitches:
@@ -34,12 +28,10 @@ def create_file_names(wave_type, all_pitches):
 def write_wav_files(current_dir, target_dir, file_pitch, all_waves):
     for f, p in file_pitch.items():
         file = f
-        amplitude = 16000
         wav_file = wave.open(file, 'w')
-        #wav_file.setparams((1, 2, 44100.0, 44100, "NONE", "not compressed"))
-        wav_file.setparams((nchannels, sampwidth, int(sampling_rate), nframes, comptype, compname))
-        for sample in all_waves[p]:    
-            wav_file.writeframes(struct.pack('h', int(sample*amplitude)))
+        wav_file.setparams((tk.nchannels, tk.sampwidth, int(tk.sampling_rate), tk.nframes, tk.comptype, tk.compname))
+        for sample in all_waves[p]:   
+            wav_file.writeframes(struct.pack('h', int(sample*tk.amplitude)))
         wav_file.close()
         move_files(current_dir, target_dir)
 

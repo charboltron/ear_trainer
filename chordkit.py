@@ -1,6 +1,8 @@
 import copy
 import toolkit as tk
 
+#Kit for chord dictionary generation
+
 triads = ['major', 'minor', 'augmented', 'diminished', 'suspended_two', 'suspended_four']
 four_notes = ['dominant_seven', 'major_seven', 'minor_seven', 'minor_major_seven', 
               'diminished_seven', 'diminished_major_seven', 'half_diminished_seven',
@@ -13,9 +15,15 @@ inversions = ['major_1st_inversion', 'major_2nd_inversion', 'minor_1st_inversion
               'minor_seven_1st_inversion', 'minor_seven_2nd_inversion', 'minor_seven_3rd_inversion',
               'minor_major_seven_1st_inversion','minor_major_seven_2nd_inversion', 'minor_major_seven_3rd_inversion',
               'diminished_major_seven_1st_inversion','diminished_major_seven_2nd_inversion', 'diminished_major_seven_3rd_inversion',
+              'half_diminished_seven_1st_inversion', 'half_diminished_seven_2nd_inversion', 'half_diminished_seven_3rd_inversion',
               'augmented_seven_1st_inversion', 'augmented_seven_2nd_inversion', 'augmented_seven_3rd_inversion',
               'augmented_major_seven_1st_inversion', 'augmented_major_seven_2nd_inversion', 'augmented_major_seven_3rd_inversion']
 
+chord_file_appends = [chord for chord in triads]
+for chord in four_notes:
+    chord_file_appends.append(chord)
+for chord in inversions:
+    chord_file_appends.append(chord)
 
 answers = []
 for chord in triads:
@@ -46,6 +54,7 @@ inversion_degrees =     [[4, 7, 12],[7, 12, 16], [3, 7, 12], [7, 12, 15],[4, 8, 
                         [3, 6, 10, 12], [6, 10, 12, 15], [10, 12, 15, 18], [4, 8, 10, 12], [8, 10, 12, 16], [10, 12, 16, 20],
                         [4, 8, 11, 12], [8, 11, 12, 16], [11, 12, 16, 20]]
 
+
 inversion_mappings = []
 for inversion in inversion_degrees:
     norm_const = inversion[0]
@@ -56,14 +65,14 @@ for inversion in inversion_degrees:
 inversion_map = dict(zip(inversions, inversion_mappings))
 #print(inversion_map)
 
-all_chords_degrees = []
-for chord in triad_degrees:
-    all_chords_degrees.append(chord)
+all_chords_degrees = [chord for chord in triad_degrees]
 for chord in four_degrees:
     all_chords_degrees.append(chord)
-for chord in inversion_map:
+for chord in inversion_mappings:
     all_chords_degrees.append(chord)
 
+chord_generator_book = dict(zip(chord_file_appends, all_chords_degrees))
+#chord_generator_book = dict(zip(chord_file_appends, all_chords_degrees))
 #pfo('all', all_chords_degrees)
 
 

@@ -5,6 +5,10 @@ import chord_trainer
 import scale_trainer
 import chimes
 
+'''
+Main CLI menu for the Tone Trainer game
+'''
+
 chimes.welcome()
 menus.title()
 menus.print_play_menu()
